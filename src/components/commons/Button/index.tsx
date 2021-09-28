@@ -66,7 +66,7 @@ type Props = {
   children: ReactNode,
   disabled: boolean,
   // onClick: boolean | void | any,
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void | any;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any;
 };
 
 export default function Button({
@@ -82,7 +82,7 @@ export default function Button({
         {...props}
         disabled={isTrue}
       >
-        {children || <option value="hello">Olá</option>}
+        {children}
       </WrapperButton>
     </>
   );

@@ -2,6 +2,7 @@ import React, { FocusEvent, useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { breakpointsMedia } from '../../theme/Utils/breakpoinstMedia';
 import { WebContext } from '../../wrappers/context';
+import Button from '../commons/Button';
 
 const WrapperPrint = styled.div`
 display: inline-grid;
@@ -20,6 +21,8 @@ max-height: 800px;
 font-family: Courier;
 font-weight: bold;
 text-align: left;
+
+
 
 ${breakpointsMedia({
     sm: css`
@@ -96,8 +99,14 @@ const TD = styled.td`
   align-items: center;
 `;
 
-export default function PrintOrder({ propsDoModal }) {
-  const { plates, totalPrice, selectedAndress } = useContext(WebContext);
+const WrapperButtom = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+export default function PrintOrder({ propsDoModal, onClose }) {
+  const { plates, setPlates, totalPrice, selectedAndress, setSelectedAndress, toggleDialog } = useContext(WebContext);
   const keys = Object.keys(plates);
   function MountPdf(values: FocusEvent) {
     values.preventDefault();
@@ -117,13 +126,17 @@ export default function PrintOrder({ propsDoModal }) {
     janela?.print();
     // document.body.innerHTML = oldPage;
     janela?.document.close();
+
+    setPlates([]);
+    setSelectedAndress({})
+    onClose();
   }
   return (
     <WrapperPrint
       {...propsDoModal}
 
     >
-      <form onSubmit={MountPdf} id="imprimir">
+      <form id="imprimir">
         <TableContainer>
           <THead>
             <TR>
@@ -173,9 +186,16 @@ export default function PrintOrder({ propsDoModal }) {
           </TBody>
         </TableContainer>
       </form>
-
-      <button onClick={MountPdf} type="submit">Imprimir</button>
-
+      <WrapperButtom>  
+        <Button onClick={() => {
+          onClose();
+          toggleDialog();
+          }
+        }>
+            Cancelar
+        </Button>
+        <Button onClick={MountPdf} type="submit">Imprimir</Button>
+      </WrapperButtom>
     </WrapperPrint>
 
   );

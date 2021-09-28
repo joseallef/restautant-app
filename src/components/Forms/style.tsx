@@ -19,6 +19,14 @@ export const WrapperForm = styled.div`
     width: 100%
   }
 
+  tr {
+    &:hover {
+      box-shadow: 0 0 0 2px 2px #999;
+      cursor: pointer;
+  
+    }
+  }
+
   ${breakpointsMedia({
     xs: css`
         width: 95vw;

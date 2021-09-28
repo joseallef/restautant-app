@@ -1,5 +1,5 @@
 import React, {
-  createContext, useState, FormEvent,
+  createContext, useState,
 } from 'react';
 
 type TypeHoocks = {
@@ -70,7 +70,6 @@ export const WebSiteProvider = ({ children }: AuxProps): JSX.Element => {
     if (Number(amount) === 0) {
       newObj(index);
     } else {
-      console.log(index, name, price, amount, plates)
       setPlates((plates) => ({
         ...plates, [index]: { name, amount, price },
       }));

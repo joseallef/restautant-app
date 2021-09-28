@@ -6,13 +6,14 @@ import {
   WrapperDialog, Label, WrapperButton,
 } from './style';
 
-export default function Dialog({ propsDoModal, setIsFormOpen }) {
+export default function Dialog({ propsDoModal, setIsFormOpen, onClose }) {
   const { toggleDialog, isPrintActive, isDialogTrue } = useContext(WebContext);
   return (
     <>
       {isPrintActive && (
       <PrintOrder
         propsDoModal={propsDoModal}
+        onClose={onClose}
       />
       )}
       {isDialogTrue && (

@@ -40,7 +40,7 @@ const Scroll = createGlobalStyle`
 
 type TypeModal = {
   isOpen: ReactNode,
-  onClose: ReactNode,
+  onClose: ReactNode | undefined,
   children: ReactNode,
 };
 
@@ -53,8 +53,10 @@ export default function Modal({ isOpen, onClose, children }: TypeModal) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const isSafeArea = event.target.closest('[data-modal-safe-area="true"]');
         if (!isSafeArea) {
-          onClose();
-          toggleDialog();
+          if (onClose) { 
+            onClose();
+            toggleDialog();
+           }
         }
       }}
     >

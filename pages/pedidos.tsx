@@ -18,18 +18,17 @@ export default function Pedidos() {
       <Header />
       <Modal
         isOpen={isModalOpen}
-        onClose={setIsModalOpen}
       >
         {(propsDoModal) => (
           <Dialog
             propsDoModal={propsDoModal}
             setIsFormOpen={setIsFormOpen}
+            onClose={setIsModalOpen}
           />
         )}
       </Modal>
       <Modal
         isOpen={isFormOpen}
-        onClose={setIsFormOpen}
       >
         {(propsDoModal) => (
           <FormShearchRegistration
