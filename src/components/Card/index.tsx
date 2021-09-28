@@ -15,6 +15,7 @@ export default function Card({
 }: DataInformation) {
   const router = useRouter();
   const { hadleChangeTotal } = useContext(WebContext);
+  // console.log(index, name, price, img)
 
   function onSubmit(event: FormEvent) {
     event.preventDefault();
@@ -36,7 +37,9 @@ export default function Card({
           <select
             name="plates"
             onChange={(e) => {
-              hadleChangeTotal(e, index, name, price);
+              // console.log(e.target.value)
+              const amount = e.target.value;
+              hadleChangeTotal(Number(amount), index, name, Number(price));
             }}
           >
             <option value="0">0</option>

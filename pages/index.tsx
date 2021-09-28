@@ -31,7 +31,7 @@ export default function Home() {
               name={dataDish[`${key}`].dish_name}
               img={dataDish[`${key}`].path_img}
               price={dataDish[`${key}`].price}
-              index={key}
+              index={Number(key)}
             />
           ))
         }

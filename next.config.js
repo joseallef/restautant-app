@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+
   trailingSlash: true,
   reactStrictMode: true,
 

@@ -115,6 +115,7 @@ export default function ClientList({ propsDoModal }) {
               <Button
                 background="#e3473c"
                 onClick={() => removeClient(Number(key))}
+                disabled={false}
               >
                 Excluir
               </Button>

@@ -29,17 +29,12 @@ export default function Link() {
   return (
     <>
       {links.map((link) => (
-        <NextLink href={link.path}>
+        <NextLink href={link.path} key={link.path}>
           <TextLink>
             {link.text}
           </TextLink>
         </NextLink>
       ))}
     </>
-  //   <NextLink href={}>
-  //     <TextLink>
-
-  //   </TextLink>
-  // </NextLink>
   );
 }

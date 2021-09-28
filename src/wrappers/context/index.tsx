@@ -1,8 +1,18 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, {
+  createContext, useState, FormEvent,
+} from 'react';
 
-export const WebContext = createContext({});
+type TypeHoocks = {
+  isModalOpen: boolean,
+};
 
-export const WebSiteProvider = ({ children }: ReactNode) => {
+export const WebContext = createContext<TypeHoocks>({});
+
+interface AuxProps {
+  children: JSX.Element | JSX.Element[];
+}
+
+export const WebSiteProvider = ({ children }: AuxProps): JSX.Element => {
   const [plates, setPlates] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -45,38 +55,51 @@ export const WebSiteProvider = ({ children }: ReactNode) => {
     });
   }
 
-  function hadleChangeTotal(event, index, name, price) {
-    if (Number(event.target.value) === 0) {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  type typesTotal = {
+    amount: number,
+    index: number,
+    name: string,
+    price: number,
+  };
+
+  function hadleChangeTotal(
+    amount, index, name, price,
+  ) {
+    // console.log(index, name, price, amount, 'caindo aqui')
+    if (Number(amount) === 0) {
       newObj(index);
     } else {
-      const { value } = event.target;
+      console.log(index, name, price, amount, plates)
       setPlates((plates) => ({
-        ...plates, [index]: { name, amount: value, price },
+        ...plates, [index]: { name, amount, price },
       }));
     }
   }
   return (
-    <WebContext.Provider value={{
-      plates,
-      setPlates,
-      hadleChangeTotal,
-      addNewValue,
-      subtractValue,
-      isModalOpen,
-      setIsModalOpen,
-      isFormOpen,
-      setIsFormOpen,
-      toggleDialog,
-      isPrintActive,
-      isDialogTrue,
-      newObj,
-      totalPrice,
-      setTotalPrice,
-      selectedAndress,
-      setSelectedAndress,
-    }}
-    >
-      {children}
-    </WebContext.Provider>
+    <>
+      <WebContext.Provider value={{
+        plates,
+        setPlates,
+        hadleChangeTotal,
+        addNewValue,
+        subtractValue,
+        isModalOpen,
+        setIsModalOpen,
+        isFormOpen,
+        setIsFormOpen,
+        toggleDialog,
+        isPrintActive,
+        isDialogTrue,
+        newObj,
+        totalPrice,
+        setTotalPrice,
+        selectedAndress,
+        setSelectedAndress,
+      }}
+      >
+        {children}
+      </WebContext.Provider>
+    </>
   );
 };

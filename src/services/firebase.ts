@@ -2,7 +2,7 @@ import * as firebase from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import databaseteste, {
   getDatabase, ref, set, get, child, remove, orderByChild, query,
-  onValue, equalTo, orderByKey, startAt, startAfter, endAt, limitToLast,
+  equalTo, orderByKey, startAt, startAfter, endAt, limitToLast,
 } from 'firebase/database';
 
 const firebaseConfig = {

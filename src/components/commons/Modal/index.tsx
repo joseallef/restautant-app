@@ -17,7 +17,7 @@ const WrapperModal = styled.div`
   z-index: 100;
   text-align: center;
 
-  ${({ isOpen }) => {
+  ${({ isOpen }: any) => {
     if (isOpen) {
       return css`
       opacity: 1;

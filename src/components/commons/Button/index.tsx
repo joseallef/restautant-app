@@ -1,7 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable consistent-return */
 import React, { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 import { breakpointsMedia } from '../../../theme/Utils/breakpoinstMedia';
+
+type PropsTypeBg = {
+  background: string | any,
+};
 
 const WrapperButton = styled.button`
   padding: 10px;
@@ -23,7 +28,7 @@ const WrapperButton = styled.button`
     `,
   })}
 
-  ${({ background }: string | any) => {
+  ${({ background }: PropsTypeBg) => {
     if (background) {
       return css`
         background: ${background};
@@ -60,6 +65,8 @@ type Props = {
   background: string | HTMLButtonElement,
   children: ReactNode,
   disabled: boolean,
+  // onClick: boolean | void | any,
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void | any;
 };
 
 export default function Button({
@@ -68,13 +75,15 @@ export default function Button({
   const isTrue = !!disabled;
   const isDefault = background || '#FB9400';
   return (
-    <WrapperButton
-      background={isDefault}
+    <>
+      <WrapperButton
+        background={isDefault}
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-      disabled={isTrue}
-    >
-      {children}
-    </WrapperButton>
+        {...props}
+        disabled={isTrue}
+      >
+        {children || <option value="hello">Olá</option>}
+      </WrapperButton>
+    </>
   );
 }

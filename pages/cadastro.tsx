@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useContext, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Box from '../src/components/commons/Box';
@@ -110,6 +113,13 @@ const WrapperButton = styled.div`
 `;
 
 export default function Cadastro() {
+  type TypeHoocks = {
+    isModalOpen: boolean,
+    setIsModalOpen: boolean,
+    isFormOpen: boolean,
+    setIsFormOpen: boolean,
+  };
+
   const {
     isModalOpen, setIsModalOpen, isFormOpen, setIsFormOpen,
   } = useContext(WebContext);
@@ -124,8 +134,9 @@ export default function Cadastro() {
           isOpen={isModalOpen}
           onClose={setIsModalOpen}
         >
-          {(propsDoModal) => (
+          {(propsDoModal: void) => (
             <CadDichForm
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               propsDoModal={propsDoModal}
               onClose={setIsModalOpen}
             />
@@ -138,7 +149,7 @@ export default function Cadastro() {
           isOpen={isFormOpen}
           onClose={setIsFormOpen}
         >
-          {(propsDoModal) => (
+          {(propsDoModal: void) => (
             <FormCadClient
               propsDoModal={propsDoModal}
               onClose={setIsFormOpen}
@@ -152,7 +163,7 @@ export default function Cadastro() {
         isOpen={isDishList}
         onClose={setIsDishList}
       >
-        {(propsDoModal) => (
+        {(propsDoModal: void) => (
           <DishList
             propsDoModal={propsDoModal}
           />
@@ -165,10 +176,9 @@ export default function Cadastro() {
         isOpen={isVisibleListCadClient}
         onClose={setIsVisibleListCadClient}
       >
-        {(propsDoModal) => (
+        {(propsDoModal: any) => (
           <ClientList
             propsDoModal={propsDoModal}
-            onClose={setIsVisibleListCadClient}
           />
         )}
       </Modal>
@@ -180,12 +190,16 @@ export default function Cadastro() {
             <label>Pratos</label>
             <WrapperButton>
               <Button
+                background="#FB9400"
                 onClick={() => setIsModalOpen(true)}
+                disabled={false}
               >
                 Cadastrar
               </Button>
               <Button
+                background="#FB9400"
                 onClick={() => setIsDishList(true)}
+                disabled={false}
               >
                 Cadastros
               </Button>
@@ -195,12 +209,16 @@ export default function Cadastro() {
             <label>Clientes</label>
             <WrapperButton>
               <Button
+                background="#FB9400"
                 onClick={() => setIsFormOpen(true)}
+                disabled={false}
               >
                 Cadastrar
               </Button>
               <Button
+                background="#FB9400"
                 onClick={() => setIsVisibleListCadClient(true)}
+                disabled={false}
               >
                 Cadastros
               </Button>

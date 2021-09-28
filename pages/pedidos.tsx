@@ -11,7 +11,7 @@ import FormShearchRegistration from '../src/components/Forms';
 
 export default function Pedidos() {
   const {
-    isModalOpen, setIsModalOpen, isFormOpen, setIsFormOpen, toggleDialog,
+    isModalOpen, setIsModalOpen, isFormOpen, setIsFormOpen,
   } = useContext(WebContext);
   return (
     <>
