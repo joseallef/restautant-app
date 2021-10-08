@@ -1,8 +1,15 @@
 import React, { FocusEvent, useContext } from 'react';
-import styled, { css } from 'styled-components';
+import styled, { css, createGlobalStyle  } from 'styled-components';
 import { breakpointsMedia } from '../../theme/Utils/breakpoinstMedia';
 import { WebContext } from '../../wrappers/context';
 import Button from '../commons/Button';
+
+const GlobalStyle = createGlobalStyle`
+@page {
+  size: landscape;
+  margin: 0cm;
+}
+`;
 
 const WrapperPrint = styled.div`
 display: inline-grid;
@@ -36,7 +43,25 @@ ${breakpointsMedia({
 
 `;
 
+const PrintableBodyWrapper = styled.div`
+  @media print {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+  }
+`;
+
 const TableContainer = styled.table`
+  @media print {
+    border: 2px solid black;
+  }
   display: flex;
   flex-wrap: wrap;
   margin-left: auto;
@@ -114,13 +139,13 @@ export default function PrintOrder({ propsDoModal, onClose }) {
 
     // Alterna o body
     // eslint-disable-next-line no-multi-assign
-    // const oldPage = document.body.innerHTML;
+    const oldPage = document.body.innerHTML;
     // const conteudo = document.body.innerHTML = `<html><head><title>Comprovante</title></head><body>${doc}</body></html>`;
 
-    const janela = window.open('', '', 'width=450px, height=600px');
+    const janela = window.open('', '', 'width=400px, height=600px');
     janela?.document.write(`<html><head><title>Comprovante</title>
     </head>
-      <body style='margin: auto; display:flex; padding: 10px; font-family: monospace; justify-content: center; align-items: flex-start;'">
+      <body style='margin: auto; display:flex; padding: 0px; font-family: monospace; justify-content: space-evenly; align-items: flex-start;'">
       ${doc}
     </body></html>`);
     janela?.print();
@@ -137,17 +162,29 @@ export default function PrintOrder({ propsDoModal, onClose }) {
 
     >
       <form id="imprimir">
-        <TableContainer>
+        <GlobalStyle />
+    
+        <table>
           <THead>
-            <TR>
+            <tr style={{
+              display: "flex",
+              justifyContent: "space-around"
+
+            }}
+            >
               <TH>Prato</TH>
               <TH>Unidade</TH>
               <TH>RS Preço</TH>
-            </TR>
+            </tr>
           </THead>
           <TBody>
             {keys.map((key) => (
-              <TR key={Math.random().toString(36).substr(2, 9)}>
+              <tr style={{
+                display: "flex",
+                justifyContent: "space-around"
+  
+              }}
+               key={Math.random().toString(36).substr(2, 9)}>
                 <TD>
                   {plates[`${key}`].name}
                 </TD>
@@ -157,34 +194,70 @@ export default function PrintOrder({ propsDoModal, onClose }) {
                 <TD>
                   {plates[`${key}`].price}
                 </TD>
-              </TR>
+              </tr>
             ))}
-            <TR>
+            <tr
+            style={{
+              display: "flex",
+              width: "340px",
+              position: "relative",
+              top: 20,
+              justifyContent:"center"
+    
+              
+            }}>
               <TD>
                 Total = R$
                 {' '}
                 {totalPrice}
               </TD>
-            </TR>
-            {Object.keys(selectedAndress).length > 0 && (
+            </tr>
+            
+          </TBody>
+          
+        </table>
+        <PrintableBodyWrapper style={{
+          display: "flex",
+          width: "400px",
+          position: "fixed",
+          top: 170,
+          justifyContent:"center"          
+        }}>
+          {/* <TBody> */}
+          {Object.keys(selectedAndress).length > 0 && (
+            // <>
+            //   <TR>
+            //     <TD>
+            //       Endereço para entrega:
+            //     </TD>
+            //   </TR>
+            //   <TR>
+            //     <TD>
+            //       {' '}
+            //       {selectedAndress.street}
+            //       {' '}
+            //       {selectedAndress.number}
+            //     </TD>
+            //   </TR>
+            // </>
             <>
-              <TR>
-                <TD>
-                  Endereço para entrega:
-                </TD>
-              </TR>
-              <TR>
-                <TD>
-                  {' '}
-                  {selectedAndress.street}
-                  {' '}
-                  {selectedAndress.number}
-                </TD>
-              </TR>
+              <h4>Endereço para entrega:</h4>
             </>
             )}
-          </TBody>
-        </TableContainer>
+          {/* </TBody> */}
+        </PrintableBodyWrapper>
+        <div style={{
+          display: "flex",
+          width: "400px",
+          position: "fixed",
+          top: 190,
+          justifyContent:"center"
+        }}>
+          {' '}
+          <p>{selectedAndress.street}</p>
+          {' '}
+          <p>{selectedAndress.number}</p>
+        </div>
       </form>
       <WrapperButtom>  
         <Button onClick={() => {
