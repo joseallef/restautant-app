@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Header from '../src/components/Header';
 import Card from '../src/components/Card';
 import Box from '../src/components/commons/Box';
@@ -6,20 +6,17 @@ import {
   database, ref, get, child,
 } from '../src/services/firebase';
 
-export default function Home() {
-  const [dataDish, setDataDish] = useState({});
-  const keys = Object.keys(dataDish);
-  const dbRef = ref(database);
+type dataType = {
+  data: [
+    dish_name: string,
+    path_img: string,
+    price: string,
 
-  useEffect(() => {
-    get(child(dbRef, 'dishs/'))
-      .then((snapshot) => snapshot)
-      .then((values) => setDataDish(values.val()))
-      .catch((e) => {
-        console.error(e);
-      });
-  }, [dbRef]);
+  ]
+};
 
+export default function Home({ data }: dataType) {
+  const keys = Object.keys(data);
   return (
     <>
       <Header />
@@ -28,9 +25,9 @@ export default function Home() {
           keys.map((key) => (
             <Card
               key={key}
-              name={dataDish[`${key}`].dish_name}
-              img={dataDish[`${key}`].path_img}
-              price={dataDish[`${key}`].price}
+              name={data[`${key}`].dish_name}
+              img={data[`${key}`].path_img}
+              price={data[`${key}`].price}
               index={Number(key)}
             />
           ))
@@ -38,4 +35,20 @@ export default function Home() {
       </Box>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const dbRef = ref(database);
+  const value = await get(child(dbRef, 'dishs/'))
+    .then((values) => values.val())
+    .catch((e) => {
+      throw new Error('Oooppss (:');
+      
+    });
+  return {
+    props: {
+      data: value,
+    },
+    revalidate: 30,
+  }
 }
