@@ -6,10 +6,8 @@ import TextField from '../src/components/Forms/TextField';
 import { WrapperDialog } from '../src/components/Tables/style';
 import { database, child, get, ref } from '../src/services/firebase';
 import { useAuth } from '../src/hooks';
-import { authLogin } from './api/auth/authAccess';
-import { parseCookies } from 'nookies';
 
-export default function Login({ values }) {
+export default function Login() {
   const router = useRouter();
 
   const { authWithFirebase } = useAuth();
@@ -33,10 +31,8 @@ export default function Login({ values }) {
     if (response) {
       router.push('/cardapio');
     } else {
-      (<div>Usuário ou senha incorreta</div>)
       alert('Usuário ou senha incorreta');
-    }
- 
+    } 
   }
 
   return (
@@ -70,7 +66,7 @@ export default function Login({ values }) {
                 onChange={handleChange}
               />
               <TextField
-                tag="text"
+                tag="password"
                 name="password"
                 placeholder="Senha"
                 value={data.password}
@@ -88,17 +84,7 @@ export default function Login({ values }) {
     </>
   );
 }
-export async function getServerSideProps(ctx) {
-  // const { dataUser } = useAuth();
-  // const session = await parseCookies(ctx);
-  // const dataUser = true;
-
-  // const auth = authLogin(ctx);
-
-  // const res = await auth.hasActiveSession();
-
-  // console.log('res', res);
-
+export async function getServerSideProps() {
   const dbRef = ref(database);
   const values = await get(child(dbRef, 'users/'))
     .then((snapshot) => snapshot.val())
