@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { breakpointsMedia } from '../../../theme/Utils/breakpoinstMedia';
+import { breakpointsMedia } from '../../../theme/Utils/breakpointMedia';
 
 const Input = styled.input`
   width: 100%;
@@ -16,14 +16,14 @@ const Input = styled.input`
   }
 
   ${breakpointsMedia({
-    md: css`
+  md: css`
       font-size: 17px;
     `,
-    lg: css`
+  lg: css`
       width: 100%;
       font-size: 20px;
     `,
-  })}
+})}
 
 `;
 

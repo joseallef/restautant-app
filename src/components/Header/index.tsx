@@ -1,11 +1,11 @@
 import React from 'react';
 import NextLink from 'next/link';
-import HeaderStyle from './styles';
+import { OptionNav, StyleHeader } from './styles';
 
 const links = [
   {
     text: 'Cardápio',
-    path: '/',
+    path: '/cardapio',
   },
   {
     text: 'Pedidos',
@@ -19,7 +19,7 @@ const links = [
 
 function Nav() {
   return (
-    <HeaderStyle.OptionNav>
+    <OptionNav>
       {links.map((link) => (
         <li key={link.path}>
           <NextLink href={link.path} passHref>
@@ -27,14 +27,14 @@ function Nav() {
           </NextLink>
         </li>
       ))}
-    </HeaderStyle.OptionNav>
+    </OptionNav>
   );
 }
 
 export default function Header(): JSX.Element {
   return (
-    <HeaderStyle.StyleHeader>
+    <StyleHeader>
       <Nav />
-    </HeaderStyle.StyleHeader>
+    </StyleHeader>
   );
 }

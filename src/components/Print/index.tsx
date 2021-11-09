@@ -5,7 +5,7 @@ import { GlobalStyle, WrapperPrint, PrintableBodyWrapper,
   THead, TR, TH, TBody, TD, WrapperButtom } from './style';
 
 export default function PrintOrder({ propsDoModal, onClose }) {
-  const { plates, setPlates, totalPrice, selectedAndress, setSelectedAndress, toggleDialog } = useContext(WebContext);
+  const { plates, setPlates, totalPrice, selectedAndres, setSelectedAndres, toggleDialog } = useContext(WebContext);
   const keys = Object.keys(plates);
   function MountPdf(values: FocusEvent) {
     values.preventDefault();
@@ -27,7 +27,7 @@ export default function PrintOrder({ propsDoModal, onClose }) {
     janela?.document.close();
 
     setPlates([]);
-    setSelectedAndress({})
+    setSelectedAndres({})
     onClose();
   }
   return (
@@ -96,7 +96,7 @@ export default function PrintOrder({ propsDoModal, onClose }) {
           top: 120,
           justifyContent:"center"
         }}>
-          {Object.keys(selectedAndress).length > 0 && (
+          {Object.keys(selectedAndres).length > 0 && (
           <p>Frete R$ 3</p>
           )}
         </div>
@@ -107,7 +107,7 @@ export default function PrintOrder({ propsDoModal, onClose }) {
           top: 170,
           justifyContent:"center"          
         }}>
-          {Object.keys(selectedAndress).length > 0 && (
+          {Object.keys(selectedAndres).length > 0 && (
             <>
               <h4>Endereço para entrega:</h4>
                 <div style={{
@@ -117,8 +117,8 @@ export default function PrintOrder({ propsDoModal, onClose }) {
                   top: 190,
                   justifyContent:"center"
                 }}>
-                  <p>{selectedAndress.street}</p>
-                  <p> Nº {selectedAndress.number}</p>
+                  <p>{selectedAndres.street}</p>
+                  <p>{selectedAndres.number}</p>
                 </div>
               </>
             )}       
@@ -132,12 +132,12 @@ export default function PrintOrder({ propsDoModal, onClose }) {
         }}>         
           Total = R$
           {' '}
-          {Object.keys(selectedAndress).length > 0 && (
+          {Object.keys(selectedAndres).length > 0 && (
             <>
               {totalPrice + 3}
             </>
           )}
-            {Object.keys(selectedAndress).length <= 0 && (
+            {Object.keys(selectedAndres).length <= 0 && (
             <>
               {totalPrice}
             </>

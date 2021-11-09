@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { breakpointsMedia } from '../../../theme/Utils/breakpoinstMedia';
+import { breakpointsMedia } from '../../../theme/Utils/breakpointMedia';
 import { WebContext } from '../../../wrappers/context';
 import Button from '../Button';
 
@@ -20,17 +20,17 @@ const WrapperSection = styled.section`
   }
  
   ${breakpointsMedia({
-    ms: css`
+  ms: css`
       label {
         font-size: 16px;
       }
     `,
-    lg: css`
+  lg: css`
       label {
         font-size: 18px;
       }
     `,
-  })}
+})}
 
 `;
 

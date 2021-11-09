@@ -1,18 +1,26 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import Box from '../src/components/commons/Box';
 import Button from '../src/components/commons/Button';
 import Modal from '../src/components/commons/Modal';
 import FormCadClient from '../src/components/Forms/Registration/formCadClient';
-import CadDichForm from '../src/components/Forms/Registration/cadDishForm';
+import CadDishForm from '../src/components/Forms/Registration/cadDishForm';
 import Header from '../src/components/Header';
-import { breakpointsMedia } from '../src/theme/Utils/breakpoinstMedia';
+import { breakpointsMedia } from '../src/theme/Utils/breakpointMedia';
 import { WebContext } from '../src/wrappers/context';
 import DishList from '../src/components/Tables/dishLint';
 import ClientList from '../src/components/Tables/clientList';
+import { useRouter } from 'next/router';
+import { useAuth } from '../src/hooks';
+import { parseCookies } from 'nookies';
+import { auth } from '../src/services/firebase';
+import DialogOption from '../src/components/commons/WrapperDialog/dialogOption';
+import { Label } from '../src/components/commons/WrapperDialog/style';
+import FormCadDrink from '../src/components/Forms/Registration/formCadDrink';
+import DrinkList from '../src/components/Tables/drinkList';
 
 const Section = styled.section`
   display: block;
@@ -31,24 +39,24 @@ const Section = styled.section`
 
 
   ${breakpointsMedia({
-    xs: css`
+  xs: css`
         width: 95vw;
         font-size: 12px
     `,
-    sm: css`
+  sm: css`
       display: flex;
         width: 80vw;
     `,
-    lg: css`
+  lg: css`
         width: 60vw;
         font-size: 15px
     `,
-    xl: css`
+  xl: css`
       padding: 12px;
         width: 60vw;
         height: 40vh; 
     `,
-  })}
+})}
 `;
 
 const WrapperDiv = styled.div`
@@ -70,14 +78,14 @@ const WrapperDiv = styled.div`
 
 
   ${breakpointsMedia({
-    md: css`
+  md: css`
       width: 50%;
 
       label {
         margin-top: 0%;
       }
     `,
-    lg: css`
+  lg: css`
 
     label {
       margin-top: 15%;
@@ -85,7 +93,7 @@ const WrapperDiv = styled.div`
     }
     
     `,
-  })}
+})}
 
 `;
 
@@ -100,19 +108,28 @@ const WrapperButton = styled.div`
   }
 
   ${breakpointsMedia({
-    sm: css`
+  sm: css`
     
     `,
-    md: css`
+  md: css`
       button {
         width: 140px;
       }
   
     `,
-  })}
+})}
 `;
 
 export default function Cadastro() {
+  const router = useRouter();
+  const { dataUser } = useAuth();
+  const cookies = parseCookies();
+  
+  useEffect(() => {   
+    if (!cookies.ACCESS_TOKEN || cookies.ACCESS_TOKEN !== auth.currentUser?.accessToken) {
+      router.push('/');
+    }
+  }, []);
   type TypeHoocks = {
     isModalOpen: boolean,
     setIsModalOpen: boolean,
@@ -122,6 +139,9 @@ export default function Cadastro() {
 
   const {
     isModalOpen, setIsModalOpen, isFormOpen, setIsFormOpen,
+    isOpenTableCad, setIsOpenTableCad, isOpenFormCad, setIsOpenFormCad,
+    isOpenFormCadDrink, setIsOpenFormCadDrink,
+    isOpenTableCadDrink, setIsOpenTableCadDrink,
   } = useContext(WebContext);
   const [isDishList, setIsDishList] = useState(false);
   const [isVisibleListCadClient, setIsVisibleListCadClient] = useState(false);
@@ -135,11 +155,51 @@ export default function Cadastro() {
           onClose={setIsModalOpen}
         >
           {(propsDoModal: void) => (
-            <CadDichForm
+            <CadDishForm
               // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               propsDoModal={propsDoModal}
               onClose={setIsModalOpen}
             />
+          )}
+        </Modal>
+      )}
+
+      {isOpenFormCadDrink && (
+        <Modal
+          isOpen={isOpenFormCadDrink}
+          onClose={setIsOpenFormCadDrink}
+        >
+          {(propsDoModal: void) => (
+            <FormCadDrink
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+              propsDoModal={propsDoModal}
+              onClose={setIsOpenFormCadDrink}
+            />
+          )}
+        </Modal>
+      )}
+      {isOpenFormCad && (
+        <Modal
+          isOpen={isOpenFormCad}
+          onClose={setIsOpenFormCad}
+        >
+          {(propsDoModal: void) => (
+            <DialogOption
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+              propsDoModal={propsDoModal}
+            >
+              <Label>Cadastrar</Label>
+              <WrapperButton>
+                <Button onClick={() => {
+                  setIsModalOpen(true);
+                  setIsOpenFormCad(false);
+                }}>Pratos</Button>
+                <Button onClick={() => {
+                  setIsOpenFormCadDrink(true);
+                  setIsOpenFormCad(false);
+                }}>Bebidas</Button>
+              </WrapperButton>
+            </DialogOption>
           )}
         </Modal>
       )}
@@ -157,48 +217,86 @@ export default function Cadastro() {
           )}
         </Modal>
       )}
+      
 
       {isDishList && (
-      <Modal
-        isOpen={isDishList}
-        onClose={setIsDishList}
-      >
-        {(propsDoModal: void) => (
-          <DishList
-            propsDoModal={propsDoModal}
-          />
-        )}
-      </Modal>
+        <Modal
+          isOpen={isDishList}
+          onClose={setIsDishList}
+        >
+          {(propsDoModal: void) => (
+            <DishList
+              propsDoModal={propsDoModal}
+            />
+          )}
+        </Modal>
+      )}
+
+      {isOpenTableCadDrink && (
+        <Modal
+          isOpen={isOpenTableCadDrink}
+          onClose={setIsOpenTableCadDrink}
+        >
+          {(propsDoModal: void) => (
+            <DrinkList
+              propsDoModal={propsDoModal}
+            />
+          )}
+        </Modal>
+      )}
+      {isOpenTableCad && (
+        <Modal
+          isOpen={isOpenTableCad}
+          onClose={setIsOpenTableCad}
+        >
+          {(propsDoModal) => (
+            <DialogOption
+              propsDoModal={propsDoModal}
+            >
+              <Label>Cadastros</Label>
+              <WrapperButton>
+                <Button onClick={() => {
+                  setIsDishList(true);
+                  setIsOpenTableCad(false);
+                }}>Pratos</Button>
+                <Button onClick={() => {
+                  setIsOpenTableCadDrink(true);
+                  setIsOpenTableCad(false);
+                }}>Bebidas</Button>
+              </WrapperButton>
+            </DialogOption>
+          )}
+        </Modal>
       )}
 
       {isVisibleListCadClient && (
-      <Modal
-        isOpen={isVisibleListCadClient}
-        onClose={setIsVisibleListCadClient}
-      >
-        {(propsDoModal: any) => (
-          <ClientList
-            propsDoModal={propsDoModal}
-          />
-        )}
-      </Modal>
+        <Modal
+          isOpen={isVisibleListCadClient}
+          onClose={setIsVisibleListCadClient}
+        >
+          {(propsDoModal: any) => (
+            <ClientList
+              propsDoModal={propsDoModal}
+            />
+          )}
+        </Modal>
       )}
 
       <Box>
         <Section>
           <WrapperDiv>
-            <label>Pratos</label>
+            <label>Pratos/Bebidas</label>
             <WrapperButton>
               <Button
                 background="#FB9400"
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => setIsOpenFormCad(true)}
                 disabled={false}
               >
                 Cadastrar
               </Button>
               <Button
                 background="#FB9400"
-                onClick={() => setIsDishList(true)}
+                onClick={() => setIsOpenTableCad(true)}
                 disabled={false}
               >
                 Cadastros

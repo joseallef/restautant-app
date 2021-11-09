@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Header from '../src/components/Header';
 import Box from '../src/components/commons/Box';
 import { H1 } from '../src/components/Tables/style';
@@ -7,9 +7,22 @@ import Modal from '../src/components/commons/Modal';
 import Dialog from '../src/components/commons/WrapperDialog';
 
 import { WebContext } from '../src/wrappers/context';
-import FormShearchRegistration from '../src/components/Forms';
+import FormSearchRegistration from '../src/components/Forms';
+import { useRouter } from 'next/router';
+import { useAuth } from '../src/hooks';
+import { parseCookies } from 'nookies';
+import { auth } from '../src/services/firebase';
 
 export default function Pedidos() {
+  const router = useRouter();
+  const cookies = parseCookies();
+  
+  useEffect(() => {
+    if (!cookies.ACCESS_TOKEN || cookies.ACCESS_TOKEN !== auth.currentUser?.accessToken) {
+      router.push('/');
+    }
+  }, []);
+  
   const {
     isModalOpen, setIsModalOpen, isFormOpen, setIsFormOpen,
   } = useContext(WebContext);
@@ -31,7 +44,7 @@ export default function Pedidos() {
         isOpen={isFormOpen}
       >
         {(propsDoModal) => (
-          <FormShearchRegistration
+          <FormSearchRegistration
             onClose={setIsFormOpen}
             propsDoModal={propsDoModal}
           />

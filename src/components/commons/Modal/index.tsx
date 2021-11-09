@@ -39,8 +39,8 @@ const Scroll = createGlobalStyle`
 `;
 
 type TypeModal = {
-  isOpen: ReactNode,
-  onClose: ReactNode | undefined,
+  isOpen: boolean | undefined,
+  onClose: () => boolean | undefined,
   children: ReactNode,
 };
 

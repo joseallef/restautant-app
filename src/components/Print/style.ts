@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle, css } from "styled-components";
-import { breakpointsMedia } from "../../theme/Utils/breakpoinstMedia";
+import { breakpointsMedia } from "../../theme/Utils/breakpointMedia";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -30,14 +30,14 @@ text-align: left;
 
 
 ${breakpointsMedia({
-    sm: css`
+  sm: css`
     width: 300px;
   `,
-    lg: css`
+  lg: css`
     width: 400px;
     font-size: 18px
   `,
-  })}
+})}
 
 `;
 
@@ -71,10 +71,10 @@ const TableContainer = styled.table`
   background: #F0FAAF;
 
 ${breakpointsMedia({
-    lg: css`
+  lg: css`
     max-width: 960px;
   `,
-  })}
+})}
 `;
 
 const THead = styled.thead`
@@ -127,5 +127,7 @@ const WrapperButtom = styled.div`
   justify-content: center;
 `;
 
-export { GlobalStyle, WrapperPrint, PrintableBodyWrapper, TableContainer,
-  THead, TR, TH, TBody, TD, WrapperButtom };
+export {
+  GlobalStyle, WrapperPrint, PrintableBodyWrapper, TableContainer,
+  THead, TR, TH, TBody, TD, WrapperButtom
+};
