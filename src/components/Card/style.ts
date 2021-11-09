@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { breakpointsMedia } from '../../theme/Utils/breakpoinstMedia';
+import { breakpointsMedia } from '../../theme/Utils/breakpointMedia';
 
 const StyleCard = styled.div`
   margin: 20px;
@@ -19,13 +19,13 @@ const StyleCard = styled.div`
   }
 
   ${breakpointsMedia({
-    sm: css`
+  sm: css`
       width: 200px;
     `,
-    lg: css`
+  lg: css`
       width: 200px;
     `,
-  })}
+})}
 
 `;
 

@@ -4,10 +4,7 @@ import Lottie from 'lottie-react-web';
 import { breakpointsMedia } from '../../../theme/Utils/breakpointMedia';
 import Button from '../../commons/Button';
 import TextField from '../TextField';
-import {
-  database, ref, set,
-} from '../../../services/firebase';
-
+import { database, ref, set } from '../../../services/firebase';
 import cadSuccess from '../../../../public/icon/cadSuccess.json';
 
 export const WrapperForm = styled.div`
@@ -48,6 +45,7 @@ const WrapperButton = styled.div`
   justify-content: space-evenly;
 
 `;
+
 const Lot = styled.div`
   width: 100%;
   justify-content: space-evenly;
@@ -58,11 +56,11 @@ const Lot = styled.div`
   }
 `;
 
-export default function FormCadClient({ propsDoModal, onClose }) {
+export default function FormCadDrink({ propsDoModal, onClose }) {
   const [data, setData] = useState({
-    celphone: '',
-    street: '',
-    number: '',
+    nameDrink: '',
+    price: '',
+    path_img: '',
   });
 
   const formStatus = {
@@ -75,24 +73,17 @@ export default function FormCadClient({ propsDoModal, onClose }) {
 
   function clearData() {
     setData({
-      ...data, celphone: '', street: '', number: '',
+      ...data, nameDrink: '', price: '', path_img: '',
     });
   }
 
-  function handleChange(event: FormEvent) {
-    const fieldName = event.target.getAttribute('name');
-    setData({
-      ...data, [fieldName]: event.target.value,
-    });
-  }
-
-  function writeUserData(event: FormEvent) {
+  function writeDishData(event: FormEvent) {
     event.preventDefault();
     setStatus(formStatus.LOADING);
-    set(ref(database, `clients/${new Date().getTime()}`), {
-      cellfone: data.celphone,
-      street: data.street,
-      number: data.number,
+    set(ref(database, `drinks/${new Date().getTime()}`), {
+      drink_name: data.nameDrink,
+      price: data.price,
+      path_img: data.path_img,
     })
       .then(() => {
         setStatus(formStatus.DONE);
@@ -105,50 +96,59 @@ export default function FormCadClient({ propsDoModal, onClose }) {
       });
   }
 
-  const isValidForm = data.celphone.length < 8
-    || data.street.length < 2 || data.number.length < 0 || data.number === '';
+  const isValidForm = data.nameDrink.length < 3
+    || data.price.length < 0 || data.path_img.length < 15;
+
+  function handleChange(event: FormEvent) {
+    const fieldName = event.target.getAttribute('name');
+    setData({
+      ...data, [fieldName]: event.target.value,
+    });
+  }
 
   return (
     <WrapperForm
       {...propsDoModal}
     >
-      <form onSubmit={writeUserData}>
+      <form>
         <TextField
           tag="text"
-          name="celphone"
-          value={data.celphone}
-          placeholder="Tel (11) 99999-9999"
+          name="nameDrink"
+          value={data.nameDrink}
+          placeholder="Nome da bebida"
           onChange={handleChange}
         />
         <TextField
           tag="text"
-          name="street"
-          value={data.street}
-          placeholder="Rua"
+          name="price"
+          value={data.price}
+          placeholder="Preço em R$"
           onChange={handleChange}
         />
         <TextField
           tag="text"
-          name="number"
-          value={data.number}
-          placeholder="Número"
+          name="path_img"
+          value={data.path_img}
+          placeholder="Url da imagem"
           onChange={handleChange}
         />
-        <WrapperButton>
-          <Button
-            background="#e3473c"
-            onClick={() => onClose()}
-          >
-            Cancelar
-          </Button>
-          <Button
-            background="#aff8ab"
-            type="submit"
-            disabled={isValidForm}
-          >
-            Cadastrar
-          </Button>
-        </WrapperButton>
+        {status === formStatus.DEFAULT && (
+          <WrapperButton>
+            <Button
+              background="#e3473c"
+              onClick={() => onClose()}
+            >
+              Cancelar
+            </Button>
+            <Button
+              background="#aff8ab"
+              onClick={writeDishData}
+              disabled={isValidForm}
+            >
+              Cadastrar
+            </Button>
+          </WrapperButton>
+        )}
         {status === formStatus.DONE && (
           <Lot>
             <Lottie

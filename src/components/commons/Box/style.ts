@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { breakpointsMedia } from '../../../theme/Utils/breakpoinstMedia';
+import { breakpointsMedia } from '../../../theme/Utils/breakpointMedia';
 
 export const Main = styled.main`
 display: flex;
@@ -12,8 +12,8 @@ align-items: center;
 justify-content: center;
 
 ${breakpointsMedia({
-    lg: css`
+  lg: css`
     max-width: 960px;
   `,
-  })}
+})}
 `;

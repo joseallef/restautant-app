@@ -1,9 +1,9 @@
 import React, { FormEvent, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Lottie from 'lottie-react-web';
-import { breakpointsMedia } from '../../../theme/Utils/breakpoinstMedia';
+import { breakpointsMedia } from '../../../theme/Utils/breakpointMedia';
 import Button from '../../commons/Button';
-import TextField from '../TextFiel';
+import TextField from '../TextField';
 import { database, ref, set } from '../../../services/firebase';
 import cadSuccess from '../../../../public/icon/cadSuccess.json';
 
@@ -21,21 +21,21 @@ background: #FFFFFF;
 overflow: hidden;
 
 ${breakpointsMedia({
-    xs: css`
+  xs: css`
       width: 95vw;
       font-size: 12px
   `,
-    sm: css`
+  sm: css`
       width: 80vw;
   `,
-    lg: css`
+  lg: css`
       width: 60vw;
       font-size: 15px
   `,
-    xl: css`
+  xl: css`
       width: 60vw;
   `,
-  })}
+})}
 
 `;
 
@@ -97,7 +97,7 @@ export default function CadDishForm({ propsDoModal, onClose }) {
   }
 
   const isValidForm = data.nameOfDish.length < 3
-   || data.price.length < 0 || data.path_img.length < 15;
+    || data.price.length < 0 || data.path_img.length < 15;
 
   function handleChange(event: FormEvent) {
     const fieldName = event.target.getAttribute('name');
@@ -150,17 +150,17 @@ export default function CadDishForm({ propsDoModal, onClose }) {
           </WrapperButton>
         )}
         {status === formStatus.DONE && (
-        <Lot>
-          <Lottie
-            width="50px"
-            options={{
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-              animationData: cadSuccess,
-              loop: true,
-            }}
-          />
-          <span>Cadastrado com sucesso!</span>
-        </Lot>
+          <Lot>
+            <Lottie
+              width="50px"
+              options={{
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                animationData: cadSuccess,
+                loop: true,
+              }}
+            />
+            <span>Cadastrado com sucesso!</span>
+          </Lot>
         )}
       </form>
     </WrapperForm>

@@ -1,25 +1,32 @@
-import React, {
-  createContext, useState,
-} from 'react';
+import React, { createContext, useState } from 'react';
 
-type TypeHoocks = {
+type TypeHooks = {
   isModalOpen: boolean,
+  setIsModalOpen: () => boolean;
+  isFormOpen: boolean;
+  setIsFormOpen: () => boolean;
+  toggleDialog: () => void;
 };
 
-export const WebContext = createContext<TypeHoocks>({});
+export const WebContext = createContext<TypeHooks>({});
 
 interface AuxProps {
   children: JSX.Element | JSX.Element[];
-}
+};
 
 export const WebSiteProvider = ({ children }: AuxProps): JSX.Element => {
+ 
   const [plates, setPlates] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isPrintActive, setIsPrintActive] = useState(false);
   const [isDialogTrue, seIsDialogTrue] = useState(true);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [selectedAndress, setSelectedAndress] = useState({});
+  const [selectedAndres, setSelectedAndres] = useState({});
+  const [isOpenTableCad, setIsOpenTableCad] = useState(false);
+  const [isOpenFormCad, setIsOpenFormCad] = useState(false);
+  const [isOpenFormCadDrink, setIsOpenFormCadDrink] = useState(false);
+  const [isOpenTableCadDrink, setIsOpenTableCadDrink] = useState(false);
 
   function toggleDialog() {
     setIsPrintActive(!isPrintActive);
@@ -93,8 +100,16 @@ export const WebSiteProvider = ({ children }: AuxProps): JSX.Element => {
         newObj,
         totalPrice,
         setTotalPrice,
-        selectedAndress,
-        setSelectedAndress,
+        selectedAndres,
+        setSelectedAndres,
+        isOpenTableCad,
+        setIsOpenTableCad,
+        isOpenFormCad,
+        setIsOpenFormCad,
+        isOpenFormCadDrink,
+        setIsOpenFormCadDrink,
+        isOpenTableCadDrink,
+        setIsOpenTableCadDrink,
       }}
       >
         {children}

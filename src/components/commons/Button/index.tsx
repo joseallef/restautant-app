@@ -2,7 +2,7 @@
 /* eslint-disable consistent-return */
 import React, { ReactNode } from 'react';
 import styled, { css } from 'styled-components';
-import { breakpointsMedia } from '../../../theme/Utils/breakpoinstMedia';
+import { breakpointsMedia } from '../../../theme/Utils/breakpointMedia';
 
 type PropsTypeBg = {
   background: string | any,
@@ -18,15 +18,15 @@ const WrapperButton = styled.button`
   font-size: 12px;
 
   ${breakpointsMedia({
-    md: css`
+  md: css`
       font-size: 14px;
       width: 140px;
       margin: 20px;
     `,
-    lg: css`
+  lg: css`
       font-size: 16px;
     `,
-  })}
+})}
 
   ${({ background }: PropsTypeBg) => {
     if (background) {
@@ -78,7 +78,7 @@ export default function Button({
     <>
       <WrapperButton
         background={isDefault}
-      // eslint-disable-next-line react/jsx-props-no-spreading
+        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
         disabled={isTrue}
       >

@@ -15,6 +15,8 @@
     "lodash": "^4.17.21",
     "lottie-react-web": "^2.2.2",
     "next": "11.1.2",
+    "next-auth": "^3.29.0",
+    "nookies": "^2.5.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "styled-components": "^5.0.0"
@@ -25,6 +27,8 @@
     "@next/eslint-plugin-next": "^11.1.2",
     "@types/firebase": "^3.2.1",
     "@types/lodash": "^4.14.172",
+    "@types/next-auth": "^3.15.0",
+    "@types/nookies": "^2.0.3",
     "@types/react": "^17.0.20",
     "@types/styled-components": "^5.1.13",
     "@typescript-eslint/eslint-plugin": "^4.30.0",

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { breakpointsMedia } from '../../theme/Utils/breakpoinstMedia';
+import { breakpointsMedia } from '../../theme/Utils/breakpointMedia';
 
 const H1 = styled.h1`
   font-family: sans-serif;
@@ -9,14 +9,14 @@ const H1 = styled.h1`
 
 
   ${breakpointsMedia({
-    md: css`
+  md: css`
       font-size: 20px;
     `,
-    lg: css`
+  lg: css`
     font-size: 26px;
     margin-top: 40px;
     `,
-  })}
+})}
 `;
 
 const TableContainer = styled.table`
@@ -31,10 +31,10 @@ const TableContainer = styled.table`
   justify-content: center;
 
 ${breakpointsMedia({
-    lg: css`
+  lg: css`
     max-width: 960px;
   `,
-  })}
+})}
 `;
 
 const THead = styled.thead`
@@ -48,18 +48,18 @@ const THead = styled.thead`
 
 
   ${breakpointsMedia({
-    sm: css`
+  sm: css`
       font-size: 18px;
     `,
-    md: css`
+  md: css`
     
     `,
 
-    lg: css`
+  lg: css`
       font-size: 20px;
     `,
 
-  })}
+})}
   
   tr {
     background: #FDA223;
@@ -96,15 +96,15 @@ const TBody = styled.tbody`
   overflow-y: auto;
 
   ${breakpointsMedia({
-    sm: css`
+  sm: css`
       font-size: 16px;
     `,
 
-    lg: css`
+  lg: css`
       font-size: 18px;
     `,
 
-  })}
+})}
 
   tr {
     &:hover {
@@ -166,24 +166,24 @@ const WrapperDialog = styled.div`
   }
 
   ${breakpointsMedia({
-    xs: css`
+  xs: css`
       width: 20vw;
         font-size: 12px
       `,
-    sm: css`
+  sm: css`
       width: 20vw;
     `,
-    md: css`
+  md: css`
       width: 20vw;
     `,
-    lg: css`
+  lg: css`
       width: 20vw;
       font-size: 15px
     `,
-    xl: css`
+  xl: css`
       width: 20vw;
     `,
-  })}
+})}
 
 `;
 

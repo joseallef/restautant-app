@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { breakpointsMedia } from '../../theme/Utils/breakpoinstMedia';
+import { breakpointsMedia } from '../../theme/Utils/breakpointMedia';
 
 export const WrapperForm = styled.div`
   display: block;
@@ -28,20 +28,20 @@ export const WrapperForm = styled.div`
   }
 
   ${breakpointsMedia({
-    xs: css`
+  xs: css`
         width: 95vw;
         font-size: 12px
     `,
-    sm: css`
+  sm: css`
         width: 80vw;
     `,
-    lg: css`
+  lg: css`
         width: 60vw;
         font-size: 15px
     `,
-    xl: css`
+  xl: css`
         width: 60vw;
     `,
-  })}
+})}
 
 `;
