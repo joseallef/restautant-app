@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
-    "firebase": "^9.0.2",
+    "firebase": "^9.6.5",
     "framer-motion": "^4.1.17",
     "lodash": "^4.17.21",
     "lottie-react-web": "^2.2.2",
