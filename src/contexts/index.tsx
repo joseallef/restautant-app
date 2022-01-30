@@ -8,7 +8,7 @@ type User = {
   id: string;
   name: string | null;
   email?: string | null;
-  access_token: string;
+  accessToken: string;
 };
 
 type AuthContextType = {
@@ -38,14 +38,22 @@ export function AuthContextProvider({ children }: PropsWithProvider) {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (!user){
         destroyCookie(null, 'ACCESS_TOKEN', { path: '/' });
-      }
+      } else {
+        const { displayName, email, accessToken, uid } = user;
+        setDataUser({
+          id: uid,
+          name: displayName,
+          email: email,
+          accessToken: accessToken,
+        });
+      } 
     });
+    
+    // return () => {
+    //   unsubscribe();
+    // }
 
-    return () => {
-      unsubscribe();
-    }
-
-  }, [userExists]);
+  }, []);
 
   async function authWithFirebase(email: string, password: string) {
 
@@ -75,7 +83,6 @@ export function AuthContextProvider({ children }: PropsWithProvider) {
       const dbRef = ref(database, 'users');
       
       const values = await query(ref(database, 'users/user'), orderByChild('email'), equalTo(result.user.email));
-      console.log('values', values)
         get(values)
         .then((snapshot) => snapshot.val())
         .catch((e) => {
@@ -86,10 +93,8 @@ export function AuthContextProvider({ children }: PropsWithProvider) {
       
       const res = keys.map((key) => {
         if (result.user.email === values.[`${key}`].email) {   
-          console.log('session kkkk', session, values);     
           
             if (result.user) {
-
               const { displayName, email, accessToken, uid } = result.user;
 
               setCookie(null, 'ACCESS_TOKEN', `${accessToken}`, {
@@ -101,15 +106,15 @@ export function AuthContextProvider({ children }: PropsWithProvider) {
                 id: uid,
                 name: displayName,
                 email: email,
-                access_token: accessToken,
+                accessToken: accessToken,
               });
             }
         }
       });
-      console.log('res', res)
 
     } catch (error) {
-      console.log(error, 'Eroor');
+      // console.log(error, 'Eroor');
+      throw new Error('Oooppss (:');
     }
   }
 

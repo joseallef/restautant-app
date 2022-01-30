@@ -8,7 +8,16 @@ type TypeHooks = {
   toggleDialog: () => void;
 };
 
-export const WebContext = createContext<TypeHooks>({});
+type platesProps = {
+  plates: [
+    id: number,
+    nome: string,
+    amount: number,
+    price: number,
+  ]
+}
+
+export const WebContext = createContext({} as TypeHooks);
 
 interface AuxProps {
   children: JSX.Element | JSX.Element[];
@@ -16,7 +25,7 @@ interface AuxProps {
 
 export const WebSiteProvider = ({ children }: AuxProps): JSX.Element => {
  
-  const [plates, setPlates] = useState([]);
+  const [plates, setPlates] = useState({} as platesProps);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isPrintActive, setIsPrintActive] = useState(false);
@@ -33,7 +42,7 @@ export const WebSiteProvider = ({ children }: AuxProps): JSX.Element => {
     seIsDialogTrue(!isDialogTrue);
   }
 
-  function addNewValue(id: number) {
+  function addNewValue(id: string) {
     if (Number(plates[`${id}`].amount) >= 0) {
       setPlates({
         ...plates, [id]: { name: plates[`${id}`].name, amount: Number(plates[`${id}`].amount) + 1, price: Number(plates[`${id}`].price) },
@@ -49,10 +58,10 @@ export const WebSiteProvider = ({ children }: AuxProps): JSX.Element => {
     }
   }
 
-  function newObj(id) {
+  function newObj(id: string) {
     const mykey = Object.keys(plates);
     const newPlates = plates;
-    setPlates([]);
+    setPlates({});
     mykey.map((key) => {
       if (key != id) {
         setPlates(() => ({

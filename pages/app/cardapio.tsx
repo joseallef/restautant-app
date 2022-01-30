@@ -1,22 +1,33 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Header from '../src/components/Header';
-import Card from '../src/components/Card';
-import Box from '../src/components/commons/Box';
+import Header from '../../src/components/Header';
+import Card from '../../src/components/Card';
+import Box from '../../src/components/commons/Box';
 import {
   database, ref, get, child, auth,
-} from '../src/services/firebase';
-import { useAuth } from '../src/hooks';
-import nookies, { parseCookies } from 'nookies';
-import { Label } from '../src/components/commons/WrapperDialog/style';
+} from '../../src/services/firebase';
+import { useAuth } from '../../src/hooks';
+import { parseCookies } from 'nookies';
+import { Label } from '../../src/components/commons/WrapperDialog/style';
+import { authLogin } from '../../src/auth';
 
 type dataType = {
-  data: [
-    dish_name: string,
-    path_img: string,
-    price: string,
-
-  ]
+  data: {
+    valuePlates: {
+      [key: string]: string;
+      dish_name: string;
+      path_img: string,
+      price: string,
+    },
+    valueDrink: {
+      [key: string]: string,
+      drink_name: string,
+      path_img: string,
+      price: string,
+      
+    },
+    token: string,
+  }
 };
 
 export default function Home({ data }: dataType) {
@@ -28,12 +39,12 @@ export default function Home({ data }: dataType) {
   
   useEffect(() => {    
     // console.log(' = > access-token', dataUser?.access_token, ' = > token', cookies.ACCESS_TOKEN, auth.currentUser?.accessToken)
-    if (!cookies.ACCESS_TOKEN || cookies?.ACCESS_TOKEN !== auth.currentUser?.accessToken) {
+    if (data.token !== auth.currentUser?.accessToken) {
       router.push('/');
     }
   }, []);
   
-
+  // console.log(auth.currentUser?.accessToken);
   return (
     <>
       <Header />
@@ -69,9 +80,11 @@ export default function Home({ data }: dataType) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(ctx) {
+
+  const auth = authLogin(ctx);
+  const token = await auth.getToken();
   
-  // console.log(auth.currentUser?.accessToken, cookies?.ACCESS_TOKEN)
   const dbRef = ref(database);
   const valuePlates = await get(child(dbRef, 'dishs/'))
     .then((values) => values.val())
@@ -90,30 +103,8 @@ export async function getStaticProps() {
       data: {
         valuePlates,
         valueDrink,
+        token,
       },
     },
-    revalidate: 30,
   }
 }
-
-// export async function getServerSideProps(ctx) {
-//   // const { dataUser } = useAuth();
-//   const session = nookies.get(ctx);
-
-//   console.log('res', session);
-
-//   const dbRef = ref(database);
-//   const value = await get(child(dbRef, 'dishs/'))
-//     .then((snapshot) => snapshot.val())
-//     .catch((e) => {
-//       throw new Error('Oooppss (:');
-
-//     });
-//     console.log('values', value);
-//   return {
-//     props: {
-//       data: value,
-//     },
-//     revalidate: 30,
-//   }
-// }

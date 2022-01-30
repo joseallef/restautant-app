@@ -3,24 +3,24 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useContext, useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import Box from '../src/components/commons/Box';
-import Button from '../src/components/commons/Button';
-import Modal from '../src/components/commons/Modal';
-import FormCadClient from '../src/components/Forms/Registration/formCadClient';
-import CadDishForm from '../src/components/Forms/Registration/cadDishForm';
-import Header from '../src/components/Header';
-import { breakpointsMedia } from '../src/theme/Utils/breakpointMedia';
-import { WebContext } from '../src/wrappers/context';
-import DishList from '../src/components/Tables/dishLint';
-import ClientList from '../src/components/Tables/clientList';
+import Box from '../../src/components/commons/Box';
+import Button from '../../src/components/commons/Button';
+import Modal from '../../src/components/commons/Modal';
+import FormCadClient from '../../src/components/Forms/Registration/formCadClient';
+import CadDishForm from '../../src/components/Forms/Registration/cadDishForm';
+import Header from '../../src/components/Header';
+import { breakpointsMedia } from '../../src/theme/Utils/breakpointMedia';
+import { WebContext } from '../../src/wrappers/context';
+import DishList from '../../src/components/Tables/dishLint';
+import ClientList from '../../src/components/Tables/clientList';
 import { useRouter } from 'next/router';
-import { useAuth } from '../src/hooks';
+import { useAuth } from '../../src/hooks';
 import { parseCookies } from 'nookies';
-import { auth } from '../src/services/firebase';
-import DialogOption from '../src/components/commons/WrapperDialog/dialogOption';
-import { Label } from '../src/components/commons/WrapperDialog/style';
-import FormCadDrink from '../src/components/Forms/Registration/formCadDrink';
-import DrinkList from '../src/components/Tables/drinkList';
+import { auth } from '../../src/services/firebase';
+import DialogOption from '../../src/components/commons/WrapperDialog/dialogOption';
+import { Label } from '../../src/components/commons/WrapperDialog/style';
+import FormCadDrink from '../../src/components/Forms/Registration/formCadDrink';
+import DrinkList from '../../src/components/Tables/drinkList';
 
 const Section = styled.section`
   display: block;

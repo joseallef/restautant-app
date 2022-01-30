@@ -65,15 +65,17 @@ type Props = {
   background: string | HTMLButtonElement,
   children: ReactNode,
   disabled: boolean,
+  type: string,
   // onClick: boolean | void | any,
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any;
 };
 
 export default function Button({
-  background, children, disabled, ...props
+  background, children, disabled, type, ...props
 }: Props): JSX.Element {
   const isTrue = !!disabled;
   const isDefault = background || '#FB9400';
+  type ? type : 'submit';
   return (
     <>
       <WrapperButton
@@ -81,6 +83,8 @@ export default function Button({
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
         disabled={isTrue}
+        type={type}
+
       >
         {children}
       </WrapperButton>

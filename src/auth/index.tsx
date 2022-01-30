@@ -1,18 +1,31 @@
 import { parseCookies, setCookie } from 'nookies';
-import { getSession } from 'next-auth/client';
+import { getSession, session } from 'next-auth/client';
+import jwt from 'jsonwebtoken';
+import {
+  database, ref, get, child, auth,
+} from '../../src/services/firebase';
 
-export const authLogin = () => {
+export const authLogin = (ctx) => {
+  const cookie = parseCookies(ctx);
+  const token = cookie['ACCESS_TOKEN'];
 
   const dataUser = true;
 
   return {
 
     async getToken() {
-      const cookies = parseCookies();
-      // const session = await getSession();
-      // // return cookies.ACCESS_TOKEN;
-      // console.log('cookies2', cookies);
-      return cookies.ACCESS_TOKEN;
+      // const cookies = parseCookies();
+      // console.log(token);
+      // auth.onAuthStateChanged(user => {
+      //   const token = ctx.req.headers.cookie.split(" ");
+      // // console.log(cookie['ACCESS_TOKEN']);
+      // });
+
+
+      // // const session = await getSession();
+      // // // return cookies.ACCESS_TOKEN;
+      // console.log('cookies2', session);
+      return token;
     },
 
     async login(token: string) {
@@ -24,16 +37,24 @@ export const authLogin = () => {
     },
 
     async hasActiveSession() {
-
-      if(dataUser) {
-        // console.log('Session active', cookies);
-        return true;
+      if (ctx.req.headers.cookie) {
+        const res = ctx.req.headers.cookie.split(' ');
+        const result = res[2].replace(/ACCESS_TOKEN=/, '');
+        if (result === token) {
+          return token;
+        } else {
+          return false;
+        }
       } else {
-        console.log('Session not active');
         return false;
-      }
-  
+      }  
     },
+
+    async getSession() {
+      const session = jwt.decode(token);
+      return session;
+    }
+
     // async logout(ctx, destroyCookieModule = destroyCookie) {
     //   destroyCookieModule(ctx, 'ACCESS_TOKEN', { path: '/' });
     // }

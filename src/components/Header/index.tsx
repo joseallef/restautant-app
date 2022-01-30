@@ -5,15 +5,15 @@ import { OptionNav, StyleHeader } from './styles';
 const links = [
   {
     text: 'Cardápio',
-    path: '/cardapio',
+    path: '/app/cardapio',
   },
   {
     text: 'Pedidos',
-    path: '/pedidos',
+    path: '/app/pedidos',
   },
   {
     text: 'Cadastro',
-    path: '/cadastro',
+    path: '/app/cadastro',
   },
 ];
 

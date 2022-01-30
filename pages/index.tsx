@@ -6,8 +6,9 @@ import TextField from '../src/components/Forms/TextField';
 import { WrapperDialog } from '../src/components/Tables/style';
 import { database, child, get, ref } from '../src/services/firebase';
 import { useAuth } from '../src/hooks';
+import { authLogin } from '../src/auth';
 
-export default function Login() {
+export default function Login(props) {
   const router = useRouter();
 
   const { authWithFirebase } = useAuth();
@@ -29,7 +30,7 @@ export default function Login() {
     const response = await authWithFirebase(data.user, data.password);
 
     if (response) {
-      router.push('/cardapio');
+      router.push('/app/cardapio');
     } else {
       alert('Usuário ou senha incorreta');
     } 
@@ -74,6 +75,7 @@ export default function Login() {
               />
               <Button
               // disabled
+              type="submit"
               >
                 Login
               </Button>
@@ -84,13 +86,14 @@ export default function Login() {
     </>
   );
 }
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx: any) {
+  const auth = authLogin(ctx);
+  const t = await auth.getToken();
   const dbRef = ref(database);
   const values = await get(child(dbRef, 'users/'))
     .then((snapshot) => snapshot.val())
-    .catch((e) => {
+    .catch(() => {
       throw new Error('Oooppss (:');
-
     });
   return {
     props: {
