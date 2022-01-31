@@ -1,4 +1,5 @@
 import React, { useState, FormEvent } from 'react';
+import { DocumentContext } from 'next/document';
 import { useRouter } from 'next/router';
 import Button from '../src/components/commons/Button';
 import Modal from '../src/components/commons/Modal';
@@ -86,7 +87,7 @@ export default function Login(props) {
     </>
   );
 }
-export async function getServerSideProps(ctx: any) {
+export async function getServerSideProps(ctx: DocumentContext) {
   const auth = authLogin(ctx);
   const t = await auth.getToken();
   const dbRef = ref(database);
