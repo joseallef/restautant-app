@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { breakpointsMedia } from '../../theme/Utils/breakpoinstMedia';
+import { breakpointsMedia } from '../../theme/Utils/breakpointMedia';
 
 const StyleHeader = styled.header`
   background: #F8F8F8;
@@ -16,19 +16,19 @@ const StyleHeader = styled.header`
   border-radius: 50px;
 
   ${breakpointsMedia({
-    xs: css`
+  xs: css`
     `,
-    sm: css`
+  sm: css`
       font-size: 18px;
     `,
 
-    lg: css`
+  lg: css`
       top: 30px;
       width: 997px;
       height: 62px;
       font-size: 24px;
     `,
-  })}
+})}
 
 `;
 
@@ -54,4 +54,4 @@ const OptionNav = styled.nav`
   }
 `;
 
-export default { OptionNav, StyleHeader };
+export { OptionNav, StyleHeader };

@@ -1,9 +1,9 @@
 import React, { FormEvent, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Lottie from 'lottie-react-web';
-import { breakpointsMedia } from '../../../theme/Utils/breakpoinstMedia';
+import { breakpointsMedia } from '../../../theme/Utils/breakpointMedia';
 import Button from '../../commons/Button';
-import TextField from '../TextFiel';
+import TextField from '../TextField';
 import {
   database, ref, set,
 } from '../../../services/firebase';
@@ -24,21 +24,21 @@ background: #FFFFFF;
 overflow: hidden;
 
 ${breakpointsMedia({
-    xs: css`
+  xs: css`
       width: 95vw;
       font-size: 12px
   `,
-    sm: css`
+  sm: css`
       width: 80vw;
   `,
-    lg: css`
+  lg: css`
       width: 60vw;
       font-size: 15px
   `,
-    xl: css`
+  xl: css`
       width: 60vw;
   `,
-  })}
+})}
 
 `;
 
@@ -106,7 +106,7 @@ export default function FormCadClient({ propsDoModal, onClose }) {
   }
 
   const isValidForm = data.celphone.length < 8
-   || data.street.length < 2 || data.number.length < 0 || data.number === '';
+    || data.street.length < 2 || data.number.length < 0 || data.number === '';
 
   return (
     <WrapperForm
@@ -150,17 +150,17 @@ export default function FormCadClient({ propsDoModal, onClose }) {
           </Button>
         </WrapperButton>
         {status === formStatus.DONE && (
-        <Lot>
-          <Lottie
-            width="50px"
-            options={{
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-              animationData: cadSuccess,
-              loop: true,
-            }}
-          />
-          <span>Cadastrado com sucesso!</span>
-        </Lot>
+          <Lot>
+            <Lottie
+              width="50px"
+              options={{
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                animationData: cadSuccess,
+                loop: true,
+              }}
+            />
+            <span>Cadastrado com sucesso!</span>
+          </Lot>
         )}
       </form>
     </WrapperForm>

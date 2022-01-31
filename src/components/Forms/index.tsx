@@ -1,6 +1,6 @@
 import React, { useState, useContext, ReactNode } from 'react';
 import Lottie from 'lottie-react-web';
-import TextField from './TextFiel';
+import TextField from './TextField';
 import loading from '../../../public/icon/loading-spinner.json';
 
 import {
@@ -16,7 +16,7 @@ import { WebContext } from '../../wrappers/context';
 
 export default function FormShearchRegistration({ onClose, propsDoModal }): JSX.Element {
   const [dataClient, setDataClient] = useState({});
-  const { setSelectedAndress, toggleDialog } = useContext(WebContext);
+  const { setSelectedAndres, toggleDialog } = useContext(WebContext);
   const myKys = Object.keys(dataClient);
 
   const [data, setData] = useState({
@@ -113,44 +113,44 @@ export default function FormShearchRegistration({ onClose, propsDoModal }): JSX.
           </TR>
         </THead>
         {numMin && (
-        <TBody>
-          {statsLoading === formStatus.LOADING && Object.keys(dataClient).length !== 0 && (
-          <TR>
-            <TD>
-              <WrapperDialog>
-                <Lottie
-                  width="50px"
-                  options={{
-                    animationData: loading,
-                    loop: true,
-                  }}
-                />
-                <span>Aguarde...</span>
-              </WrapperDialog>
-            </TD>
-          </TR>
-          )}
-          {myKys.map((key) => (
-            <TR
-              key={key}
-              onClick={() => {
-                setSelectedAndress(dataClient[`${key}`]);
-                onClose(false);
-                toggleDialog();
-              }}
-            >
-              <TD>
-                {dataClient[`${key}`].cellfone}
-              </TD>
-              <TD>
-                {dataClient[`${key}`].street}
-              </TD>
-              <TD>
-                {dataClient[`${key}`].number}
-              </TD>
-            </TR>
-          ))}
-        </TBody>
+          <TBody>
+            {statsLoading === formStatus.LOADING && Object.keys(dataClient).length !== 0 && (
+              <TR>
+                <TD>
+                  <WrapperDialog>
+                    <Lottie
+                      width="50px"
+                      options={{
+                        animationData: loading,
+                        loop: true,
+                      }}
+                    />
+                    <span>Aguarde...</span>
+                  </WrapperDialog>
+                </TD>
+              </TR>
+            )}
+            {myKys.map((key) => (
+              <TR
+                key={key}
+                onClick={() => {
+                  setSelectedAndres(dataClient[`${key}`]);
+                  onClose(false);
+                  toggleDialog();
+                }}
+              >
+                <TD>
+                  {dataClient[`${key}`].cellfone}
+                </TD>
+                <TD>
+                  {dataClient[`${key}`].street}
+                </TD>
+                <TD>
+                  {dataClient[`${key}`].number}
+                </TD>
+              </TR>
+            ))}
+          </TBody>
         )}
       </TableContainer>
     </WrapperForm>

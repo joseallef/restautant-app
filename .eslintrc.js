@@ -2,9 +2,11 @@
 module.exports = {
   env: {
     browser: true,
-    es2020: true,
+    es2021: true,
+    'cypress/global': true,
   },
   extends: [
+    'plugin:cypress/recommended',
     // 'airbnb',
     // 'airbnb-typescript',
     // 'airbnb/hooks',

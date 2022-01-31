@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { breakpointsMedia } from '../../../theme/Utils/breakpoinstMedia';
+import { breakpointsMedia } from '../../../theme/Utils/breakpointMedia';
 
 const WrapperDialog = styled.div`
   display: inline-grid;
@@ -15,24 +15,24 @@ const WrapperDialog = styled.div`
   overflow: hidden;
 
   ${breakpointsMedia({
-    xs: css`
+  xs: css`
         width: 95vw;
         font-size: 12px
       `,
-    sm: css`
+  sm: css`
       width: 70vw;
     `,
-    md: css`
+  md: css`
       width: 50vw;
     `,
-    lg: css`
+  lg: css`
       width: 40vw;
       font-size: 15px
     `,
-    xl: css`
+  xl: css`
       width: 30vw;
     `,
-  })}
+})}
 
 `;
 
@@ -42,15 +42,16 @@ const Label = styled.label`
   font-size: 20px;
   font-family: Courier;
   font-weight: bold;
+  text-align: center;
 
   ${breakpointsMedia({
-    sm: css`
+  sm: css`
       font-size: 25px;
     `,
-    lg: css`
+  lg: css`
       font-size: 30px;
     `,
-  })}
+})}
 
 `;
 
